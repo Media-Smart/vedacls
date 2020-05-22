@@ -2,9 +2,9 @@ import os
 import sys
 import argparse
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../classifier'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../vedacls'))
 
-from classification.assembler import assemble
+from vedacls.assembler import assemble
 
 
 def parse_args():

@@ -1,13 +1,12 @@
 import os
 import sys
 import torch
-from mmcv import Config
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../classifier'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../vedacls'))
 
-from classification import models
-from classification.utils import load_checkpoint
-from classification.datasets import transforms
+from vedacls import models
+from vedacls.utils import load_checkpoint, Config
+from vedacls.datasets import transforms
 
 
 class Classifier(object):
