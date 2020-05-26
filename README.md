@@ -55,14 +55,18 @@ The catalogue structure of dataset supported by vedacls toolbox is as follows,
 Dataset
 ├── train
 │   ├── 0
+│   │   ├── XXX.jpg
+│   │     
 │   ├── 1
 │   ├── 2
 │   ├── ...
+│
 ├── val
 │   ├── 0
 │   ├── 1
 │   ├── 2
 │   ├── ...
+│ 
 ├── test
     ├── 0
     ├── 1
