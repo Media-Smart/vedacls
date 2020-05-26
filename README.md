@@ -51,7 +51,7 @@ pip install -r requirements.txt
 ## Prepare data
 The format of dataset supported by vedacls toolbox is as follows,
 
-```python
+```shell
 Dataset
 ├── train
 │   ├── 0

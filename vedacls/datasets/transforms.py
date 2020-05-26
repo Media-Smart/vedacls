@@ -27,7 +27,8 @@ from .registry import PIPELINES
 
 __all__ = ["Lambda", "Compose", "ToTensor", "Normalize",
            "RandomHorizontalFlip", "RandomVerticalFlip",
-           "ColorJitter", "ResizeKeepRatio"]
+           "RandomRotation", "ColorJitter", "ResizeKeepRatio",
+           "RandomEdgeShifting", "GaussianNoiseChannelWise"]
 
 _pil_interpolation_to_str = {
     Image.NEAREST: 'PIL.Image.NEAREST',
@@ -203,58 +204,6 @@ class RandomVerticalFlip(object):
 
 
 @PIPELINES.register_module
-class ConstantRotation(object):
-    """Rotate the image by angle.
-
-    Args:
-        degrees (sequence or float or int): Value of degrees to select from.
-        resample ({PIL.Image.NEAREST, PIL.Image.BILINEAR, PIL.Image.BICUBIC}, optional):
-            An optional resampling filter. See `filters`_ for more information.
-            If omitted, or if the image has mode "1" or "P", it is set to PIL.Image.NEAREST.
-        expand (bool, optional): Optional expansion flag.
-            If true, expands the output to make it large enough to hold the entire rotated image.
-            If false or omitted, make the output image the same size as the input image.
-            Note that the expand flag assumes rotation around the center and no translation.
-        center (2-tuple, optional): Optional center of rotation.
-            Origin is the upper left corner.
-            Default is the center of the image.
-
-    .. _filters: https://pillow.readthedocs.io/en/latest/handbook/concepts.html#filters
-
-    """
-
-    def __init__(self, degrees, ratio=0.5, resample=False, expand=False, center=None):
-        self.degrees = degrees
-        self.ratio = ratio
-        self.resample = resample
-        self.expand = expand
-        self.center = center
-
-    def __call__(self, img):
-        """
-        Args:
-            img (PIL Image): Image to be rotated.
-
-        Returns:
-            PIL Image: Rotated image.
-        """
-        if random.random() < self.ratio:
-            angle = random.choice(self.degrees)
-        else:
-            angle = 0
-        return F.rotate(img, angle, self.resample, self.expand, self.center)
-
-    def __repr__(self):
-        format_string = self.__class__.__name__ + '(degrees={0}'.format(self.degrees)
-        format_string += ', resample={0}'.format(self.resample)
-        format_string += ', expand={0}'.format(self.expand)
-        if self.center is not None:
-            format_string += ', center={0}'.format(self.center)
-        format_string += ')'
-        return format_string
-
-
-@PIPELINES.register_module
 class RandomRotation(object):
     """Rotate the image by angle.
 
@@ -262,6 +211,9 @@ class RandomRotation(object):
         degrees (sequence or float or int): Range of degrees to select from.
             If degrees is a number instead of sequence like (min, max), the range of degrees
             will be (-degrees, +degrees).
+        ratio(float): probability of a image to be rotated. 0 <= ratio <= 1
+        mode(bool): mode of degrees selections. 'range': degree will be randomly selected from the
+            given range; 'constant': degree will be randomly selected from the given constants
         resample ({PIL.Image.NEAREST, PIL.Image.BILINEAR, PIL.Image.BICUBIC}, optional):
             An optional resampling filter. See `filters`_ for more information.
             If omitted, or if the image has mode "1" or "P", it is set to PIL.Image.NEAREST.
@@ -272,6 +224,7 @@ class RandomRotation(object):
         center (2-tuple, optional): Optional center of rotation.
             Origin is the upper left corner.
             Default is the center of the image.
+        fillcolor(tuple): the color used to padding after rotation. a tuple with length of 3, (r, g, b).
 
     .. _filters: https://pillow.readthedocs.io/en/latest/handbook/concepts.html#filters
 
@@ -289,11 +242,13 @@ class RandomRotation(object):
                     raise ValueError("'range' mode: If degrees is a sequence, it must be of len 2.")
                 self.degrees = degrees
 
-        if self.mode == 'constant':
+        elif self.mode == 'constant':
             if isinstance(degrees, Iterable):
                 self.degrees = degrees
             else:
                 raise ValueError("'constant' mode: degrees must be Iterable")
+        else:
+            raise NotImplementedError("currently, method only supports mode 'range' and 'constant'")
 
         self.ratio = ratio
         self.resample = resample
@@ -449,7 +404,7 @@ def _is_pil_image(img):
 
 @PIPELINES.register_module
 class ResizeKeepRatio(object):
-    """Resize the input PIL Image to the given size with keeping ratio and value padding
+    """Resize the input PIL Image to given size with ratio kept and constant padding
 
     Args:
         size (sequence): Desired output size. If size is a sequence like
@@ -459,13 +414,16 @@ class ResizeKeepRatio(object):
             (size, size * width/height)
         interpolation (int, optional): Desired interpolation. Default is
             ``PIL.Image.BILINEAR``
+        fillcolor(tuple): the color used to padding after resize.
+            a tuple with length of 3, (r, g, b).
+
     """
 
-    def __init__(self, size, interpolation=Image.BILINEAR, padding_value=(0, 0, 0)):
+    def __init__(self, size, interpolation=Image.BILINEAR, fillcolor=(0, 0, 0)):
         assert isinstance(size, int) or(isinstance(size, Iterable) and len(size) == 2)
         self.size = size
         self.interpolation = interpolation
-        self.padding_value = padding_value
+        self.fillcolor = fillcolor
 
     def __call__(self, img):
         """
@@ -487,17 +445,17 @@ class ResizeKeepRatio(object):
         if not (isinstance(self.size, int) or (isinstance(self.size, tuple) and len(self.size) == 2)):
             raise TypeError('Got inappropriate size arg: {}'.format(self.size))
 
-        w, h = img.size
+        h, w = img.size
         if isinstance(self.size, int):
-            ratio = self.size / max(w, h)
-            w_ = self.size
+            ratio = self.size / max(h, w)
             h_ = self.size
+            w_ = self.size
         else:
-            ratio = min(self.size[0]/w, self.size[1]/h)
-            w_ = self.size[0]
-            h_ = self.size[1]
+            ratio = min(self.size[0]/h, self.size[1]/w)
+            h_ = self.size[0]
+            w_ = self.size[1]
 
-        w_o, h_o = int(w * ratio), int(h * ratio)
+        h_o, w_o = int(h * ratio), int(w * ratio)
 
         img_o = img.resize((w_o, h_o), resample=self.interpolation)
         top = (h_ - h_o) // 2
@@ -505,7 +463,7 @@ class ResizeKeepRatio(object):
         left = (w_ - w_o) // 2
         right = w_ - w_o - left
 
-        img_out = F.pad(img_o, (left, top, right, bottom), fill=self.padding_value, padding_mode='constant')
+        img_out = F.pad(img_o, (left, top, right, bottom), fill=self.fillcolor, padding_mode='constant')
 
         return img_out
 
