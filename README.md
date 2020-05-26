@@ -49,7 +49,7 @@ pip install -r requirements.txt
 ```
 
 ## Prepare data
-The format of dataset supported by vedacls toolbox is as follows,
+The catalogue structure of dataset supported by vedacls toolbox is as follows,
 
 ```shell
 Dataset
