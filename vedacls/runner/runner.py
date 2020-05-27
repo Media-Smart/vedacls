@@ -76,7 +76,7 @@ class Runner(object):
             data_time.update(time.time() - end)
 
             if self.use_gpu:
-                images = images.cuda(non_blocking=True)  # TODO: default False, related to multi treads
+                images = images.cuda(non_blocking=True)
                 targets = targets.cuda(non_blocking=True)
 
             # compute output
@@ -123,7 +123,7 @@ class Runner(object):
             for i, (images, targets, paths) in enumerate(val_loader):
 
                 if self.use_gpu:
-                    images = images.cuda(non_blocking=True)  # TODO: default False, related to multi treads
+                    images = images.cuda(non_blocking=True)
                     targets = targets.cuda(non_blocking=True)
 
                 # compute output
@@ -168,7 +168,7 @@ class Runner(object):
             for i, (images, targets, paths) in enumerate(test_loader):
 
                 if self.use_gpu:
-                    images = images.cuda(non_blocking=True)  # TODO: default False, related to multi treads
+                    images = images.cuda(non_blocking=True)
                     targets = targets.cuda(non_blocking=True)
 
                 # compute output
@@ -229,4 +229,3 @@ class Runner(object):
     def get_lr(self):
         lr = [x['lr'] for x in self.optimizer.param_groups][0]
         return lr
-
