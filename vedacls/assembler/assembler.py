@@ -57,9 +57,8 @@ def assemble(cfg_path, checkpoint='', test_mode=False):
         'test': test_loader
     }
 
-    logger.info('Build Model')
-
     # model
+    logger.info('Build Model')
     model = build_model(cfg.model)
 
     if torch.cuda.is_available():
