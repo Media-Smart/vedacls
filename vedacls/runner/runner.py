@@ -194,7 +194,7 @@ class Runner(object):
 
     def save_checkpoint(self, save_optimizer=True, is_best=False):
         current_epoch = self.lr_scheduler.last_epoch
-        file_name = 'checkpoint.pth'
+        file_name = 'checkpoint.pth.tar'
         file_path = os.path.join(self.work_dir, file_name)
         meta = dict(epoch=current_epoch,
                     best_acc1=self.best_acc1)
@@ -206,7 +206,7 @@ class Runner(object):
                         lr_scheduler=lr_scheduler,
                         meta=meta)
         if is_best:
-            shutil.copy(file_path, os.path.join(os.path.dirname(file_path), 'model_best.pth'))
+            shutil.copy(file_path, os.path.join(os.path.dirname(file_path), 'model_best.pth.tar'))
 
     def state_loader(self, checkpoint, mode='load', map_location='default'):
         if map_location == 'default':

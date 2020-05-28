@@ -60,8 +60,7 @@ def assemble(cfg_path, checkpoint='', test_mode=False):
     logger.info('Build Model')
 
     # model
-    model, model_info = build_model(cfg.model)
-    logger.info(model_info)
+    model = build_model(cfg.model)
 
     if torch.cuda.is_available():
         use_gpu = True
