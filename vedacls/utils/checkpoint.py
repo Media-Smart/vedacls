@@ -71,8 +71,7 @@ def load_checkpoint(model, filename, map_location=None):
             raise RuntimeError(
                 'No state_dict found in checkpoint file {}'.format(filename))
         if hasattr(model, 'module'):
-            # model.module.load_state_dict(state_dict)
-            model.load_state_dict(state_dict)
+            model.module.load_state_dict(state_dict)
         else:
             model.load_state_dict(state_dict)
         return checkpoint
