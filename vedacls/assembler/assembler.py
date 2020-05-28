@@ -31,7 +31,6 @@ def assemble(cfg_path, checkpoint='', test_mode=False):
         random.seed(seed)
         torch.manual_seed(seed)
         np.random.seed(seed)
-        cudnn.benchmark = False
         cudnn.deterministic = True
         logger.warning('You have chosen to seed training. '
                        'This will turn on the CUDNN deterministic setting, '
