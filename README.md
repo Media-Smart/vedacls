@@ -25,7 +25,7 @@ a. Create a conda virtual environment and activate it.
 
 ```shell
 conda create -n vedacls python=3.7 -y
-conda activate veda
+conda activate vedacls
 ```
 
 b. Install PyTorch and torchvision following the [official instructions](https://pytorch.org/), *e.g.*,
