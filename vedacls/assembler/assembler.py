@@ -1,4 +1,5 @@
 import os
+import time
 import random
 import numpy as np
 
@@ -19,10 +20,12 @@ from ..runner.builder import build_runner
 def assemble(cfg_path, checkpoint='', test_mode=False):
     cfg = Config.fromfile(cfg_path)
 
-    os.makedirs(cfg.work_dir, exist_ok=True)
+    timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
+    work_dir = os.path.join(cfg.work_dir, timestamp)
+    os.makedirs(work_dir, exist_ok=True)
 
     # logger
-    logger = build_logger(cfg.logger, dict(workdir=cfg.work_dir))
+    logger = build_logger(cfg.logger, dict(workdir=work_dir, timestamp=timestamp))
 
     # set seed
     logger.info('Set seed')
@@ -96,7 +99,7 @@ def assemble(cfg_path, checkpoint='', test_mode=False):
             criterion=criterion,
             optimizer=optimizer,
             lr_scheduler=lr_scheduler,
-            work_dir=cfg.work_dir,
+            work_dir=work_dir,
             test_mode=test_mode,
             use_gpu=use_gpu
         )

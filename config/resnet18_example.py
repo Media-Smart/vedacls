@@ -1,5 +1,5 @@
 # data
-data_root = 'data/combine/sample_dataset/'
+data_root = 'data/sample_dataset/'
 dataset_type = 'ImageFolder'
 
 img_norm_cfg = dict(
@@ -22,10 +22,10 @@ train_pipeline = [
          degrees=180,
          ratio=0.5,
          mode='range',
-         fillcolor=(147, 117, 78)),
+         fillcolor=(124, 116, 103)),
     dict(type='ResizeKeepRatio',
          size=256,
-         padding_value=(147, 117, 78)),
+         padding_value=(124, 116, 103)),
     dict(type='RandomHorizontalFlip'),
     dict(type='RandomVerticalFlip'),
     dict(type='ToTensor'),
@@ -35,7 +35,7 @@ train_pipeline = [
 test_pipeline = [
     dict(type='ResizeKeepRatio',
          size=256,
-         padding_value=(147, 117, 78)),
+         padding_value=(124, 116, 103)),
     dict(type='ToTensor'),
     dict(type='Normalize', **img_norm_cfg),
 ]
@@ -104,7 +104,7 @@ logger = dict(
     ), )
 
 seed = 32
-work_dir = 'work_dir/r18_e180_1.25e-2_cj_es_gn_rr/orc_c3_hw_c1s5_rw_c2s1_fc_c1s2/'
+work_dir = 'work_dir/resnet18'
 
 load = None
 resume = None
