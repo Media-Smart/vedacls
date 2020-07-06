@@ -121,13 +121,13 @@ python tools/inference.py configs/resnet18.py checkpoint_path image_path
 ```shell
 python tools/deploy/benchmark.py configs/resnet18.py checkpoint_path image_path
 ```
-More available arguments are detailed in [tools/deploy/benchmark.py](https://github.com/Media-Smart/vedacls/blob/master/vedacls/tools/deploy/benchmark.py)
+More available arguments are detailed in [tools/deploy/benchmark.py](https://github.com/Media-Smart/vedacls/blob/master/tools/deploy/benchmark.py)
 
 3. Export model
 ```shell
 python tools/deploy/export.py configs/resnet18.py checkpoint_path image_path out_model_path
 ```
-More available arguments are detailed in [tools/deploy/export.py](https://github.com/Media-Smart/vedacls/blob/master/vedacls/tools/deploy/export.py)
+More available arguments are detailed in [tools/deploy/export.py](https://github.com/Media-Smart/vedacls/blob/master/tools/deploy/export.py)
 
 ## Contact
 
