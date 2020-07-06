@@ -1,18 +1,4 @@
-# common configuration
-common = dict(
-    seed=1111,
-    logger=dict(
-        handlers=(
-            dict(type='StreamHandler', level='INFO'),
-            dict(type='FileHandler', level='INFO'),
-        ),
-    ),
-    cudnn_deterministic=False,
-    cudnn_benchmark=True,
-    metric=dict(type='Accuracy', topk=(1,)),
-)
-
-# configuration for inference
+## 1. configuration for inference
 size = 256
 crop_size = 224
 padding_value = 127.5
@@ -33,12 +19,25 @@ deploy = dict(
     ),
 )
 
-# configuration for train/test
+## 2. configuration for train/test
 root_workdir = 'workdir'
-data_root = 'data/'
+data_root = 'data'
 dataset_type = 'ImageFolder'
 
-# configuration for test
+common = dict(
+    seed=1111,
+    logger=dict(
+        handlers=(
+            dict(type='StreamHandler', level='INFO'),
+            dict(type='FileHandler', level='INFO'),
+        ),
+    ),
+    cudnn_deterministic=False,
+    cudnn_benchmark=True,
+    metric=dict(type='Accuracy', topk=(1,)),
+)
+
+# 2.1 configuration for test
 test = dict(
     data=dict(
         dataloader=dict(
@@ -51,13 +50,13 @@ test = dict(
         ),
         dataset=dict(
             type=dataset_type,
-            root=data_root+'test',
+            root=data_root + '/' + 'test',
         ),
         transform=deploy['transform'],
     ),
 )
 
-# configuration for train
+# 2.2 configuration for train
 train = dict(
     data=dict(
         train=dict(
@@ -71,7 +70,7 @@ train = dict(
             ),
             dataset=dict(
                 type=dataset_type,
-                root=data_root + 'train',
+                root=data_root + '/' + 'train',
             ),
             transform=[
                 dict(type='RandomResizedCrop',
@@ -93,7 +92,7 @@ train = dict(
             ),
             dataset=dict(
                 type=dataset_type,
-                root=data_root + 'val',
+                root=data_root + '/' + 'val',
             ),
             transform=deploy['transform'],
         ),
