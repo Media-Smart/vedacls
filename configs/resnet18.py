@@ -33,11 +33,12 @@ deploy = dict(
     ),
 )
 
-# configuration for test
+# configuration for train/test
 root_workdir = 'workdir'
 data_root = 'data/'
 dataset_type = 'ImageFolder'
 
+# configuration for test
 test = dict(
     data=dict(
         dataloader=dict(
