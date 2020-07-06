@@ -1,5 +1,6 @@
 ## Introduction
-vedacls is an open source  classification toolbox based on PyTorch.
+
+vedacls is an open source classification toolbox based on PyTorch.
 
 ## License
 
@@ -9,32 +10,33 @@ This project is released under the [Apache 2.0 license](LICENSE).
 ### Requirements
 
 - Linux
-- Python 3.7+
-- PyTorch 1.1.0 or higher
+- Python 3.6+
+- PyTorch 1.4.0 or higher
 - CUDA 9.0 or higher
 
 We have tested the following versions of OS and softwares:
 
 - OS: Ubuntu 16.04.6 LTS
-- CUDA: 9.0
-- Python 3.7.3
+- CUDA: 10.2
+- PyTorch 1.4.0
+- Python 3.6.9
 
 ### Install vedacls
 
-a. Create a conda virtual environment and activate it.
+1. Create a conda virtual environment and activate it.
 
 ```shell
-conda create -n vedacls python=3.7 -y
+conda create -n vedacls python=3.6.9 -y
 conda activate vedacls
 ```
 
-b. Install PyTorch and torchvision following the [official instructions](https://pytorch.org/), *e.g.*,
+2. Install PyTorch and torchvision following the [official instructions](https://pytorch.org/), *e.g.*,
 
 ```shell
 conda install pytorch torchvision -c pytorch
 ```
 
-c. Clone the vedacls repository.
+3. Clone the vedacls repository.
 
 ```shell
 git clone https://github.com/Media-Smart/vedacls.git
@@ -42,17 +44,17 @@ cd vedacls
 vedacls_root=${PWD}
 ```
 
-d. Install dependencies.
+4. Install dependencies.
 
 ```shell
 pip install -r requirements.txt
 ```
 
 ## Prepare data
-The catalogue structure of dataset supported by vedacls toolbox is as follows,
+The catalogue structure of dataset supported by vedacls toolbox is as follows:
 
 ```shell
-Dataset
+data/
 ├── train
 │   ├── 0
 │   │   ├── XXX.jpg
@@ -76,29 +78,56 @@ Dataset
 
 ## Train
 
-a. Config
+1. Config
 
 Modify some configuration accordingly in the config file like `configs/resnet18.py`
 
-b. Run
+2. Run
 
 ```shell
-python tools/train.py configs/resnet.py
+python tools/train.py configs/resnet18.py
 ```
 
-Snapshots and logs will be generated at `${vedacls_root}/workdir`.
+Snapshots and logs will be generated at `${vedacls_root}/workdir/resnet18`
 
 ## Test
 
-a. Config
+1. Config
 
 Modify some configuration accordingly in the config file like `configs/resnet18.py`
 
-b. Run
+2. Run
 
 ```shell
-python tools/test.py configs/resnet18.py path_to_resnet18_weights
+python tools/test.py configs/resnet18.py checkpoint_path
 ```
+
+## Inference
+
+1. Config
+
+Modify some configuration accordingly in the config file like `configs/resnet18.py`
+
+2. Run
+
+```shell
+python tools/inference.py configs/resnet18.py checkpoint_path image_path
+```
+
+## Deploy
+1. Install volksdep following the [official instructions](https://github.com/Media-Smart/volksdep)
+
+2. Benchmark(optional)
+```shell
+python tools/deploy/benchmark.py configs/resnet18.py checkpoint_path image_path
+```
+More available arguments are detailed in [tools/deploy/benchmark.py](https://github.com/Media-Smart/vedacls/blob/master/vedacls/tools/deploy/benchmark.py)
+
+3. Export model
+```shell
+python tools/deploy/export.py configs/resnet18.py checkpoint_path image_path out_model_path
+```
+More available arguments are detailed in [tools/deploy/export.py](https://github.com/Media-Smart/vedacls/blob/master/vedacls/tools/deploy/export.py)
 
 ## Contact
 

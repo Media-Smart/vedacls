@@ -1,3 +1,3 @@
 from ..utils import Registry
 
-RUNNERS = Registry('runner')
+METRICS = Registry('metric')

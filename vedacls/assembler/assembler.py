@@ -1,5 +1,4 @@
 import os
-import time
 import random
 import numpy as np
 
@@ -9,7 +8,7 @@ import torch.backends.cudnn as cudnn
 from ..utils.config import Config
 from ..logger import build_logger
 from ..datasets.builder import build_dataset
-from ..datasets.loader.build_loader import build_dataloader
+from vedacls.dataloaders.build_loader import build_dataloader
 from ..models.builder import build_model
 from ..criterions.builder import build_criterion
 from ..optimizers.builder import build_optimizer
@@ -18,18 +17,26 @@ from ..runner.builder import build_runner
 
 
 def assemble(cfg_path, checkpoint='', test_mode=False):
+    _, fullname = os.path.split(cfg_path)
+    fname, ext = os.path.splitext(fullname)
+
     cfg = Config.fromfile(cfg_path)
 
-    timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
-    work_dir = os.path.join(cfg.work_dir, timestamp)
-    os.makedirs(work_dir, exist_ok=True)
+    # create workdir if not exist
+    root_workdir = cfg.pop('root_workdir')
+    workdir = os.path.join(root_workdir, fname)
+    cfg['workdir'] = workdir
+    os.makedirs(workdir, exist_ok=True)
 
     # logger
-    logger = build_logger(cfg.logger, dict(workdir=work_dir, timestamp=timestamp))
+    logger = build_logger(cfg['logger'], dict(workdir=workdir))
+
+    # set gpu environment
+    os.environ['CUDA_VISIBLE_DEVICES'] = cfg['gpu_id']
 
     # set seed
     logger.info('Set seed')
-    seed = cfg.seed
+    seed = cfg.get('seed', None)
     if seed is not None:
         random.seed(seed)
         torch.manual_seed(seed)

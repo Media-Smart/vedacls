@@ -1,7 +1,6 @@
-scipy
+opencv-python
+albumentations
 numpy
 addict
-imgaug
-Pillow
-torch>=1.1.0
-torchvision>=0.3.0
+torch>=1.4.*
+torchvision>=0.5.*

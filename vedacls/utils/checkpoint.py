@@ -21,7 +21,8 @@ def weights_to_cpu(state_dict):
     return state_dict_cpu
 
 
-def save_checkpoint(model, filename, optimizer=None, lr_scheduler=None, meta=None):
+def save_checkpoint(model, filename, optimizer=None, lr_scheduler=None,
+                    meta=None):
     """Save checkpoint to file.
 
     The checkpoint will have 3 fields: ``meta``, ``state_dict`` and
@@ -59,7 +60,7 @@ def save_checkpoint(model, filename, optimizer=None, lr_scheduler=None, meta=Non
     torch.save(checkpoint, filename)
 
 
-def load_checkpoint(model, filename, map_location=None):
+def load_checkpoint(model, filename, map_location=None, strict=False):
     if os.path.isfile(filename):
         checkpoint = torch.load(filename, map_location=map_location)
 
@@ -71,9 +72,9 @@ def load_checkpoint(model, filename, map_location=None):
             raise RuntimeError(
                 'No state_dict found in checkpoint file {}'.format(filename))
         if hasattr(model, 'module'):
-            model.module.load_state_dict(state_dict)
+            model.module.load_state_dict(state_dict, strict=strict)
         else:
-            model.load_state_dict(state_dict)
+            model.load_state_dict(state_dict, strict=strict)
         return checkpoint
     else:
         raise RuntimeError(
