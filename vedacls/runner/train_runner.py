@@ -4,7 +4,7 @@ from collections import OrderedDict
 import torch
 
 from ..optimizers import build_optimizer
-from ..criterions import build_criterion
+from ..criteria import build_criterion
 from ..lr_schedulers import build_lr_scheduler
 from ..utils import save_checkpoint
 from .deploy_runner import DeployRunner
