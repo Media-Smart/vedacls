@@ -1,4 +1,4 @@
-## 1. configuration for inference
+# 1. configuration for inference
 size = 256
 crop_size = 224
 padding_value = 127.5
@@ -19,7 +19,7 @@ deploy = dict(
     ),
 )
 
-## 2. configuration for train/test
+# 2. configuration for train/test
 root_workdir = 'workdir'
 data_root = 'data'
 dataset_type = 'ImageFolder'
@@ -37,7 +37,7 @@ common = dict(
     metric=dict(type='Accuracy', topk=(1,)),
 )
 
-# 2.1 configuration for test
+## 2.1 configuration for test
 test = dict(
     data=dict(
         dataloader=dict(
@@ -56,7 +56,7 @@ test = dict(
     ),
 )
 
-# 2.2 configuration for train
+## 2.2 configuration for train
 train = dict(
     data=dict(
         train=dict(
