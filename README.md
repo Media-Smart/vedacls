@@ -129,6 +129,10 @@ python tools/deploy/export.py configs/resnet18.py checkpoint_path image_path out
 ```
 More available arguments are detailed in [tools/deploy/export.py](https://github.com/Media-Smart/vedacls/blob/master/tools/deploy/export.py)
 
+4. Inference SDK
+
+You can refer to [FlexInfer](https://github.com/Media-Smart/flexinfer/blob/master/examples/classifier.py)
+
 ## Contact
 
 This repository is currently maintained by Chenhao Wang ([@C-H-Wong](http://github.com/C-H-Wong)), Hongxiang Cai ([@hxcai](http://github.com/hxcai)), Yichao Xiong ([@mileistone](https://github.com/mileistone)).
