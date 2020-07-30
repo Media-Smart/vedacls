@@ -123,7 +123,7 @@ python tools/deploy/benchmark.py configs/resnet18.py checkpoint_path image_path
 ```
 More available arguments are detailed in [tools/deploy/benchmark.py](https://github.com/Media-Smart/vedacls/blob/master/tools/deploy/benchmark.py)
 
-3. Export model
+3. Export model as ONNX or TensorRT engine format
 ```shell
 python tools/deploy/export.py configs/resnet18.py checkpoint_path image_path out_model_path
 ```
@@ -131,7 +131,7 @@ More available arguments are detailed in [tools/deploy/export.py](https://github
 
 4. Inference SDK
 
-You can refer to [FlexInfer](https://github.com/Media-Smart/flexinfer/blob/master/examples/classifier.py)
+You can refer to [FlexInfer](https://github.com/Media-Smart/flexinfer/blob/master/examples/classifier.py) for details.
 
 ## Contact
 
