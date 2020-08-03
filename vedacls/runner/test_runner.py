@@ -1,11 +1,11 @@
 import torch
 
-from .deploy_runner import DeployRunner
+from .inference_runner import InferenceRunner
 
 
-class TestRunner(DeployRunner):
-    def __init__(self, test_cfg, deploy_cfg, common_cfg=None):
-        super(TestRunner, self).__init__(deploy_cfg, common_cfg)
+class TestRunner(InferenceRunner):
+    def __init__(self, test_cfg, inference_cfg, common_cfg=None):
+        super(TestRunner, self).__init__(inference_cfg, common_cfg)
 
         self.test_dataloader = self._build_dataloader(test_cfg['data'])
 

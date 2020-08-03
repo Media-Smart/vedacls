@@ -7,12 +7,12 @@ from ..optimizers import build_optimizer
 from ..criteria import build_criterion
 from ..lr_schedulers import build_lr_scheduler
 from ..utils import save_checkpoint
-from .deploy_runner import DeployRunner
+from .inference_runner import InferenceRunner
 
 
-class TrainRunner(DeployRunner):
-    def __init__(self, train_cfg, deploy_cfg, common_cfg=None):
-        super(TrainRunner, self).__init__(deploy_cfg, common_cfg)
+class TrainRunner(InferenceRunner):
+    def __init__(self, train_cfg, inference_cfg, common_cfg=None):
+        super(TrainRunner, self).__init__(inference_cfg, common_cfg)
 
         self.train_dataloader = self._build_dataloader(
             train_cfg['data']['train'])

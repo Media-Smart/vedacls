@@ -39,10 +39,10 @@ def main():
     cfg = Config.fromfile(cfg_path)
 
     test_cfg = cfg['test']
-    deploy_cfg = cfg['deploy']
+    inference_cfg = cfg['inference']
     common_cfg = cfg['common']
 
-    runner = TestRunner(test_cfg, deploy_cfg, common_cfg)
+    runner = TestRunner(test_cfg, inference_cfg, common_cfg)
     assert runner.use_gpu, 'Please use gpu for benchmark.'
     runner.load_checkpoint(args.checkpoint)
 

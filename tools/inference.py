@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
 import cv2
 import numpy as np
 
-from vedacls.runner import DeployRunner
+from vedacls.runner import InferenceRunner
 from vedacls.utils import Config
 
 
@@ -26,10 +26,10 @@ def main():
     cfg_path = args.config
     cfg = Config.fromfile(cfg_path)
 
-    deploy_cfg = cfg['deploy']
+    inference_cfg = cfg['inference']
     common_cfg = cfg.get('common')
 
-    runner = DeployRunner(deploy_cfg, common_cfg)
+    runner = InferenceRunner(inference_cfg, common_cfg)
     runner.load_checkpoint(args.checkpoint)
 
     image = cv2.imread(args.image)

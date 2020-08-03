@@ -4,7 +4,7 @@ crop_size = 224
 padding_value = 127.5
 img_norm_cfg = dict(mean=0.5, std=0.5, max_pixel_value=255.0)
 
-deploy = dict(
+inference = dict(
     gpu_id='0',
     transform=[
         dict(type='Resize', height=size, width=size),
@@ -52,7 +52,7 @@ test = dict(
             type=dataset_type,
             root=data_root + '/' + 'test',
         ),
-        transform=deploy['transform'],
+        transform=inference['transform'],
     ),
 )
 
@@ -94,7 +94,7 @@ train = dict(
                 type=dataset_type,
                 root=data_root + '/' + 'val',
             ),
-            transform=deploy['transform'],
+            transform=inference['transform'],
         ),
     ),
     optimizer=dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0001),

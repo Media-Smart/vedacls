@@ -5,18 +5,18 @@ from ..utils import load_checkpoint
 from .base import Common
 
 
-class DeployRunner(Common):
-    def __init__(self, deploy_cfg, common_cfg=None):
-        deploy_cfg = deploy_cfg.copy()
+class InferenceRunner(Common):
+    def __init__(self, inference_cfg, common_cfg=None):
+        inference_cfg = inference_cfg.copy()
         common_cfg = {} if common_cfg is None else common_cfg.copy()
 
-        common_cfg['gpu_id'] = deploy_cfg.pop('gpu_id')
-        super(DeployRunner, self).__init__(common_cfg)
+        common_cfg['gpu_id'] = inference_cfg.pop('gpu_id')
+        super(InferenceRunner, self).__init__(common_cfg)
 
         # build test transform
-        self.transform = self._build_transform(deploy_cfg['transform'])
+        self.transform = self._build_transform(inference_cfg['transform'])
         # build model
-        self.model = self._build_model(deploy_cfg['model'])
+        self.model = self._build_model(inference_cfg['model'])
         self.model.eval()
 
     def _build_model(self, cfg):

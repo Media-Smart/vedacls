@@ -29,11 +29,11 @@ def main():
     os.makedirs(workdir, exist_ok=True)
 
     train_cfg = cfg['train']
-    deploy_cfg = cfg['deploy']
+    inference_cfg = cfg['inference']
     common_cfg = cfg['common']
     common_cfg['workdir'] = workdir
 
-    runner = TrainRunner(train_cfg, deploy_cfg, common_cfg)
+    runner = TrainRunner(train_cfg, inference_cfg, common_cfg)
     runner()
 
 

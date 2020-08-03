@@ -31,11 +31,11 @@ def main():
     os.makedirs(workdir, exist_ok=True)
 
     test_cfg = cfg['test']
-    deploy_cfg = cfg['deploy']
+    inference_cfg = cfg['inference']
     common_cfg = cfg['common']
     common_cfg['workdir'] = workdir
 
-    runner = TestRunner(test_cfg, deploy_cfg, common_cfg)
+    runner = TestRunner(test_cfg, inference_cfg, common_cfg)
     runner.load_checkpoint(args.checkpoint)
     runner()
 
