@@ -127,13 +127,11 @@ The result of resnet18 is as follows（test device: GTX 1080Ti, CUDA:10.2, CUDNN
 
 | framework  |  version   |     input shape      |         data type         |   throughput(FPS)    |   latency(ms)   |
 |   :---:    |   :---:    |        :---:         |           :---:           |        :---:         |      :---:      |
-|  pytorch   |   1.5.1    |   (1, 1, 32, 100)    |           fp32            |         160          |      6.16       |
-|  tensorrt  |  7.1.3.4   |   (1, 1, 32, 100)    |           fp32            |         390          |      2.57       |
-|  pytorch   |   1.5.1    |   (1, 1, 32, 100)    |           fp16            |         144          |      6.48       |
-|  tensorrt  |  7.1.3.4   |   (1, 1, 32, 100)    |           fp16            |         377          |       2.6       |
-|  tensorrt  |  7.1.3.4   |   (1, 1, 32, 100)    |       int8(entropy)       |         640          |      1.65       |
-|  tensorrt  |  7.1.3.4   |   (1, 1, 32, 100)    |      int8(entropy_2)      |         607          |      1.75       |
-|  tensorrt  |  7.1.3.4   |   (1, 1, 32, 100)    |       int8(minmax)        |         606          |      1.72       |
+|  pytorch   |   1.5.1    |   (1, 3, 224, 224)   |           fp32            |         239          |      4.19       |
+|  tensorrt  |  7.1.3.4   |   (1, 3, 224, 224)   |           fp32            |         871          |      1.34       |
+|  pytorch   |   1.5.1    |   (1, 3, 224, 224)   |           fp16            |         273          |      3.46       |
+|  tensorrt  |  7.1.3.4   |   (1, 3, 224, 224)   |           fp16            |         853          |      1.33       |
+|  tensorrt  |  7.1.3.4   |   (1, 3, 224, 224)   |      int8(entropy_2)      |         1596         |      0.78       |
 
 
 3. Export model as ONNX or TensorRT engine format
