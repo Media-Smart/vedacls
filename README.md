@@ -123,7 +123,7 @@ python tools/deploy/benchmark.py configs/resnet18.py checkpoint_path image_path
 ```
 More available arguments are detailed in [tools/deploy/benchmark.py](https://github.com/Media-Smart/vedacls/blob/master/tools/deploy/benchmark.py)
 
-The result of resnet18 is as follows（test device: jetson xavier, CUDA:10.2）:
+The result of resnet18 is as follows（test device: Jetson AGX Xavier, CUDA:10.2）:
 
 | framework  |  version   |     input shape      |         data type         |   throughput(FPS)    |   latency(ms)   |
 |    :-:     |    :-:     |         :-:          |            :-:            |         :-:          |       :-:       |
