@@ -123,16 +123,15 @@ python tools/deploy/benchmark.py configs/resnet18.py checkpoint_path image_path
 ```
 More available arguments are detailed in [tools/deploy/benchmark.py](https://github.com/Media-Smart/vedacls/blob/master/tools/deploy/benchmark.py)
 
-The result of resnet18 is as follows（test device: GTX 1080Ti, CUDA:10.2, CUDNN:8.0）:
+The result of resnet18 is as follows（test device: jetson tx2, CUDA:10.2）:
 
-| framework  |  version   |     input shape      |         data type         |   throughput(FPS)    |   latency(ms)   |
-|   :---:    |   :---:    |        :---:         |           :---:           |        :---:         |      :---:      |
-|  pytorch   |   1.5.1    |   (1, 3, 224, 224)   |           fp32            |         239          |      4.19       |
-|  tensorrt  |  7.1.3.4   |   (1, 3, 224, 224)   |           fp32            |         871          |      1.34       |
-|  pytorch   |   1.5.1    |   (1, 3, 224, 224)   |           fp16            |         273          |      3.46       |
-|  tensorrt  |  7.1.3.4   |   (1, 3, 224, 224)   |           fp16            |         853          |      1.33       |
-|  tensorrt  |  7.1.3.4   |   (1, 3, 224, 224)   |      int8(entropy_2)      |         1596         |      0.78       |
-
+| framework | version |   input shape    |    data type    | throughput(FPS) | latency(ms) |
+| :-------: | :-----: | :--------------: | :-------------: | :-------------: | :---------: |
+|  pytorch  |  1.5.0  | (1, 3, 224, 224) |      fp32       |       151       |    7.3     |
+| tensorrt  | 7.1.0.16 | (1, 3, 224, 224) |      fp32       |      336       |    3.53     |
+|  pytorch  |  1.5.0  | (1, 3, 224, 224) |      fp16       |       143       |    6.78     |
+| tensorrt  | 7.1.0.16 | (1, 3, 224, 224) |      fp16       |      749       |    1.67     |
+| tensorrt  | 7.1.0.16 | (1, 3, 224, 224) | int8(entropy_2) |      632       |    2.22     |
 
 3. Export model as ONNX or TensorRT engine format
 ```shell
