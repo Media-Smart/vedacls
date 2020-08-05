@@ -125,13 +125,14 @@ More available arguments are detailed in [tools/deploy/benchmark.py](https://git
 
 The result of resnet18 is as follows（test device: jetson tx2, CUDA:10.2）:
 
-| framework | version |   input shape    |    data type    | throughput(FPS) | latency(ms) |
-| :-------: | :-----: | :--------------: | :-------------: | :-------------: | :---------: |
-|  pytorch  |  1.5.0  | (1, 3, 224, 224) |      fp32       |       151       |    7.3     |
-| tensorrt  | 7.1.0.16 | (1, 3, 224, 224) |      fp32       |      336       |    3.53     |
-|  pytorch  |  1.5.0  | (1, 3, 224, 224) |      fp16       |       143       |    6.78     |
-| tensorrt  | 7.1.0.16 | (1, 3, 224, 224) |      fp16       |      749       |    1.67     |
-| tensorrt  | 7.1.0.16 | (1, 3, 224, 224) | int8(entropy_2) |      632       |    2.22     |
+| framework  |  version   |     input shape      |         data type         |   throughput(FPS)    |   latency(ms)   |
+|    :-:     |    :-:     |         :-:          |            :-:            |         :-:          |       :-:       |
+|  pytorch   |   1.5.0    |   (1, 3, 224, 224)   |           fp32            |          99          |      8.86       |
+|  tensorrt  |  7.1.0.16  |   (1, 3, 224, 224)   |           fp32            |         328          |      3.56       |
+|  pytorch   |   1.5.0    |   (1, 3, 224, 224)   |           fp16            |         172          |      6.01       |
+|  tensorrt  |  7.1.0.16  |   (1, 3, 224, 224)   |           fp16            |         754          |       1.8       |
+|  tensorrt  |  7.1.0.16  |   (1, 3, 224, 224)   |      int8(entropy_2)      |         809          |      1.64       |
+
 
 3. Export model as ONNX or TensorRT engine format
 ```shell
