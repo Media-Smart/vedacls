@@ -68,7 +68,7 @@ class RandomEdgeShifting(ImageOnlyTransform):
         x_max = params['cols'] - offset[2]
         y_max = params['rows'] - offset[3]
 
-        return F.crop(img, x_min=x_min, y_min=y_min, x_max=x_max, y_max=y_max)
+        return img[y_min:y_max, x_min=x_max, :]
 
     def get_transform_init_args_names(self):
         return ('shift_factor',)
